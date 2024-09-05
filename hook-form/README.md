@@ -1,37 +1,43 @@
-# Farm + React
+### React Hook Form
 
-This template should help you start developing using React and TypeScript in Farm.
+# Register
 
-## Setup
+To manage the forms states. usage details below
 
-Install the dependencies:
+```import { useForm } from "react-hook-form";
 
-```bash
-pnpm install
+   const form = useForm();
+   const { register } = form;
+   const { name, ref, onChange, onBlur } = register("username")
+
+   <input
+   type="text"
+   id="username"
+   name={name}
+   ref={ref}
+   onChange={onChange}
+   onBlur={onBlur}
+   />
+
+      <input
+      type="text"
+      id="username"
+      {...register("username")}
+   />
 ```
 
-## Get Started
+# Devtools
 
-Start the dev server:
+install::
+pnpm add -D @hookform/devtools
+usage::
+import { DevTool } from "@hookform/devtools";
 
-```bash
-pnpm start
+# Control
+
+To associate component with form. devtools provides this option to see each fields state.
+
 ```
-
-Build the app for production:
-
-```bash
-pnpm build
-```
-
-Preview the Production build product:
-
-```bash
-pnpm preview
-```
-
-Clear persistent cache local files
-
-```bash
-pnpm clean
+Touched: true - whether the input is got interacted.
+Dirty:	true - whether the input got updated.
 ```
