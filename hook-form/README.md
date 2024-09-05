@@ -41,3 +41,37 @@ To associate component with form. devtools provides this option to see each fiel
 Touched: true - whether the input is got interacted.
 Dirty:	true - whether the input got updated.
 ```
+
+# formState
+
+Formstate contains error object.
+
+const { errors } = formState;
+
+# defaultValues - for the form enhancement
+
+```
+const form = useForm<FormValues>({
+defaultValues: {
+username: "dhilip",
+email: "",
+channel: "",
+},
+});
+```
+
+# nested objects - for the form enhancement
+
+```
+const form = useForm<FormValues>({
+defaultValues: {
+username: "dhilip",
+email: "",
+channel: "",
+social:{
+    facebook:"",
+    twitter:""
+}
+},
+});
+```
