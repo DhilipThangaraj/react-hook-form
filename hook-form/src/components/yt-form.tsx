@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import { DevTool } from "@hookform/devtools";
 
-import { useForm, useFieldArray } from "react-hook-form";
+import { useForm, useFieldArray, FieldErrors } from "react-hook-form";
 
 type FormValues = {
   username: string;
+  username1: string;
   email: string;
   channel: string;
   social: {
@@ -26,6 +27,7 @@ export default function YTForm() {
   const form = useForm<FormValues>({
     defaultValues: {
       username: "dhilip",
+      username1: "",
       email: "",
       channel: "",
       social: {
@@ -41,26 +43,30 @@ export default function YTForm() {
       age: 0,
       dob: new Date(),
     },
+    mode: "onSubmit",
   });
 
   const {
     register,
     control,
     handleSubmit,
-    formState: { errors, isDirty, touchedFields, dirtyFields },
+    formState: {
+      errors,
+      isDirty,
+      touchedFields,
+      dirtyFields,
+      isValid,
+      isSubmitSuccessful,
+      isSubmitted,
+      isSubmitting,
+      submitCount,
+      trigger,
+    },
     watch,
     getValues,
     setValue,
+    reset,
   } = form;
-
-  console.log(
-    "isDirty :::",
-    isDirty,
-    "touchedFields :::",
-    touchedFields,
-    "dirtyFields ::",
-    dirtyFields
-  );
 
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
@@ -77,8 +83,18 @@ export default function YTForm() {
     return () => subscription.unsubscribe();
   }, [watch]);
 
+  useEffect(() => {
+    if (isSubmitSuccessful) {
+      reset();
+    }
+  }, [isSubmitSuccessful, reset]);
+
   const onSubmit = (data: FormValues) => {
     console.log("??????form submitted", data);
+  };
+
+  const onError = (errors: FieldErrors<FormValues>) => {
+    console.log("???????Form Error occured", errors);
   };
 
   const handleGetValues = () => {
@@ -94,10 +110,14 @@ export default function YTForm() {
     });
   };
 
+  const handleResetValues = () => {
+    reset();
+  };
+
   return (
     <div>
       <h1>{`Form Render Count :: ${renderCount}`}</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit, onError)}>
         <label htmlFor="username">Username</label>
         <input
           type="text"
@@ -107,6 +127,16 @@ export default function YTForm() {
           })}
         />
         <p>{errors.username?.message}</p>
+
+        <label htmlFor="username1">Username1</label>
+        <input
+          type="text"
+          id="username1"
+          {...register("username1", {
+            required: "user name1 is mandatory",
+          })}
+        />
+        <p>{errors.username1?.message}</p>
 
         <label htmlFor="email">Email</label>
         <input type="email" id="email" {...register("email")} />
@@ -188,7 +218,7 @@ export default function YTForm() {
           <input
             type="date"
             id="dob"
-            {...register("age", {
+            {...register("dob", {
               required: "DOB is required",
               valueAsDate: true,
             })}
@@ -196,9 +226,13 @@ export default function YTForm() {
           <p className="error">{errors.dob?.message}</p>
         </div>
 
-        <button>Submit</button>
+        <button disabled={!isDirty || !isValid || isSubmitting}>Submit</button>
         <button onClick={handleGetValues}>Get Values</button>
         <button onClick={handleSetValues}>Set Values</button>
+        <button onClick={handleResetValues}>Reset Form</button>
+        <button onClick={() => trigger(["username", "username1"])}>
+          Manual Trigger Validation
+        </button>
         <DevTool control={control} />
       </form>
     </div>

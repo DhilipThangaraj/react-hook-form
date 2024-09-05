@@ -174,3 +174,28 @@ if you disable with register you can do any validation
           />
 
 ```
+
+# Enhancement on form submission
+
+isValid - itbecomes true when all the fields are entered
+isDirty - ifModification happened
+this two flag to disable submit button.
+
+```
+<button disabled={!isDirty || !isValid}>Submit</button>
+```
+
+# Form Submission state and form reset
+
+1.isSubmiting
+2.isSubmitted
+3.isSubmitSuccessful
+4.submitCount 5. resetForm
+
+```
+<button disabled={!isDirty || !isValid || isSubmiting}>Submit</button>
+```
+
+# Additional
+
+1.Manual validation trigger 2. Mode trigger 3. Async validation from the api
