@@ -96,5 +96,5 @@ phoneNumbers:["",""]
 # dynamic controls
 
 ```
-dataFieldArray()
+const { fields ,append,remove } = dataFieldArray([{}])
 ```
