@@ -145,3 +145,32 @@ setValues("username","") -  set the values
       shouldValidate: true,
     });
 ```
+
+# Touched and Dirty States
+
+isDirty - only gives true when form got modified from the original data.
+touchedFields - After user interaction.
+dirtyFields - After the input is modified.
+
+```
+  const {
+   formState: { errors, isDirty, touchedFields, dirtyFields },
+   } = form;
+```
+
+# Disabling form fields
+
+if you disable with register you can do any validation
+
+```<input
+            type="text"
+            id="twitter"
+            <!-- disabled -->
+            {...register("social.twitter", {
+              disabled: true,
+               <!-- disabled: watch("email").includes("@") ? false : true, -->
+              required: "Enter the twitter url",
+            })}
+          />
+
+```

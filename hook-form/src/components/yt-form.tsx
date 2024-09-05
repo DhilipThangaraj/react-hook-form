@@ -47,11 +47,20 @@ export default function YTForm() {
     register,
     control,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, touchedFields, dirtyFields },
     watch,
     getValues,
     setValue,
   } = form;
+
+  console.log(
+    "isDirty :::",
+    isDirty,
+    "touchedFields :::",
+    touchedFields,
+    "dirtyFields ::",
+    dirtyFields
+  );
 
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
@@ -104,7 +113,14 @@ export default function YTForm() {
 
         <div className="form-control">
           <label htmlFor="twitter">Twitter</label>
-          <input type="text" id="twitter" {...register("social.twitter")} />
+          <input
+            type="text"
+            id="twitter"
+            {...register("social.twitter", {
+              disabled: watch("email").includes("@") ? false : true,
+              required: "Enter the twitter url",
+            })}
+          />
         </div>
 
         <div className="form-control">
