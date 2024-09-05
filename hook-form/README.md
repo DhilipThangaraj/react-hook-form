@@ -108,6 +108,9 @@ valueAsNumber helps to number string to number when submit the form
 
 # Watch
 
+watch always subscribe to input which causes rerenders of the component.
+with useEffect if you use it wont cause rerenders
+
 ```
   const watchUserName = watch("username");
     const watchUserNameArray = watch(["username","email"]);
@@ -122,4 +125,12 @@ valueAsNumber helps to number string to number when submit the form
     return subscription.unsubscribe();
   }, [watch]);
 
+```
+
+# getValues
+
+```
+getValues() - give me the all values
+getValues("username") - single value it returns
+getValues(["username","channel"]) - give me the two values
 ```

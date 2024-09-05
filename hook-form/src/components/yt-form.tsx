@@ -49,12 +49,18 @@ export default function YTForm() {
     handleSubmit,
     formState: { errors },
     watch,
+    getValues,
   } = form;
 
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
     control,
   });
+
+  const handleGetValues = () => {
+    console.log("?????get all values", getValues());
+    console.log("?????get single value", getValues("username"));
+  };
 
   renderCount++;
 
@@ -166,6 +172,7 @@ export default function YTForm() {
         </div>
 
         <button>Submit</button>
+        <button onClick={handleGetValues}>Get Values</button>
         <DevTool control={control} />
       </form>
     </div>
