@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { DevTool } from "@hookform/devtools";
 
 import { useForm, useFieldArray } from "react-hook-form";
@@ -16,7 +16,11 @@ type FormValues = {
   phNumbers: {
     number: string;
   }[];
+  age: number;
+  dob: Date;
 };
+
+let renderCount = 0;
 
 export default function YTForm() {
   const form = useForm<FormValues>({
@@ -34,6 +38,8 @@ export default function YTForm() {
           number: "",
         },
       ],
+      age: 0,
+      dob: new Date(),
     },
   });
 
@@ -42,6 +48,7 @@ export default function YTForm() {
     control,
     handleSubmit,
     formState: { errors },
+    watch,
   } = form;
 
   const { fields, append, remove } = useFieldArray({
@@ -49,12 +56,23 @@ export default function YTForm() {
     control,
   });
 
+  renderCount++;
+
+  useEffect(() => {
+    const subscription = watch((value) => {
+      console.log("??????value", value);
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   const onSubmit = (data: FormValues) => {
     console.log("??????form submitted", data);
   };
 
   return (
     <div>
+      <h1>{`Form Render Count :: ${renderCount}`}</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <label htmlFor="username">Username</label>
         <input
@@ -119,6 +137,32 @@ export default function YTForm() {
               Add Phone Number
             </button>
           </div>
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="age">Age</label>
+          <input
+            type="number"
+            id="age"
+            {...register("age", {
+              required: "Age is required",
+              valueAsNumber: true,
+            })}
+          />
+          <p className="error">{errors.age?.message}</p>
+        </div>
+
+        <div className="form-control">
+          <label htmlFor="dob">Date of birth</label>
+          <input
+            type="date"
+            id="dob"
+            {...register("age", {
+              required: "DOB is required",
+              valueAsDate: true,
+            })}
+          />
+          <p className="error">{errors.dob?.message}</p>
         </div>
 
         <button>Submit</button>

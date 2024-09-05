@@ -98,3 +98,28 @@ phoneNumbers:["",""]
 ```
 const { fields ,append,remove } = dataFieldArray([{}])
 ```
+
+# Numeric and Date values
+
+```
+valueAsDate helps to convert string to date
+valueAsNumber helps to number string to number when submit the form
+```
+
+# Watch
+
+```
+  const watchUserName = watch("username");
+    const watchUserNameArray = watch(["username","email"]);
+      const watchUserName = watch(); - To watch entire form
+
+    //performance consideration
+      useEffect(() => {
+    const subscription = watch((value) => {
+      console.log("??????value", value);
+    });
+
+    return subscription.unsubscribe();
+  }, [watch]);
+
+```
