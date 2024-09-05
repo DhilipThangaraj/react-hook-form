@@ -75,3 +75,20 @@ social:{
 },
 });
 ```
+
+# Array - for the form enhancement
+
+```
+const form = useForm<FormValues>({
+defaultValues: {
+username: "dhilip",
+email: "",
+channel: "",
+social:{
+    facebook:"",
+    twitter:""
+},
+phoneNumbers:["",""]
+},
+});
+```
