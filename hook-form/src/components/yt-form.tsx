@@ -50,17 +50,13 @@ export default function YTForm() {
     formState: { errors },
     watch,
     getValues,
+    setValue,
   } = form;
 
   const { fields, append, remove } = useFieldArray({
     name: "phNumbers",
     control,
   });
-
-  const handleGetValues = () => {
-    console.log("?????get all values", getValues());
-    console.log("?????get single value", getValues("username"));
-  };
 
   renderCount++;
 
@@ -74,6 +70,19 @@ export default function YTForm() {
 
   const onSubmit = (data: FormValues) => {
     console.log("??????form submitted", data);
+  };
+
+  const handleGetValues = () => {
+    console.log("?????get all values", getValues());
+    console.log("?????get single value", getValues("username"));
+  };
+
+  const handleSetValues = () => {
+    setValue("username", "", {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
   };
 
   return (
@@ -173,6 +182,7 @@ export default function YTForm() {
 
         <button>Submit</button>
         <button onClick={handleGetValues}>Get Values</button>
+        <button onClick={handleSetValues}>Set Values</button>
         <DevTool control={control} />
       </form>
     </div>

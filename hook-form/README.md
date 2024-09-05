@@ -134,3 +134,14 @@ getValues() - give me the all values
 getValues("username") - single value it returns
 getValues(["username","channel"]) - give me the two values
 ```
+
+# setValues
+
+```
+setValues("username","") -  set the values
+ setValue("username", "", {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+```
